@@ -265,9 +265,17 @@ public static class MjEngineTool {
     mjcf.SetAttribute(
         "pos",
         MjEngineTool.Vector3ToMjcf(MjEngineTool.MjVector3(localTransform.Translation)));
-    mjcf.SetAttribute(
+
+        Quaternion result = Quaternion.identity;
+            if (localTransform.Rotation != Quaternion.identity)
+            {
+                result = MjEngineTool.MjQuaternion(localTransform.Rotation);
+                Debug.Log("did alternative export for mj object" + component.name);
+            }
+            mjcf.SetAttribute(
         "quat",
-        MjEngineTool.QuaternionToMjcf(MjEngineTool.MjQuaternion(localTransform.Rotation)));
+        MjEngineTool.QuaternionToMjcf(result));
+
   }
 
   // Generates an Mjcf of the specified component's transform.
